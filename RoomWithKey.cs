@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace Labb_4_Version_2
+namespace Labb4
 {
 
-    public class Room : Square, ISendToMap
+    public class RoomWithKey : Square, ISendToMap
     {
 
         //Egenskaper ?
@@ -22,12 +20,19 @@ namespace Labb_4_Version_2
 
         //Funktioner?
 
-        public void SendSign()  //Skicka tecken till Map-klassen
+        public char SendSign()  //Skicka tecken till Map-klassen
         {
-            Console.WriteLine(RoomSign);
+            char send = RoomSign;
+            return send;
         }
 
-        public Room()  ////Konstruktor, vilka parametrar till den??
+        public RoomWithKey()  ////Konstruktor, vilka parametrar till den??
         { }
     }
+
+
+
+
+
+
 }

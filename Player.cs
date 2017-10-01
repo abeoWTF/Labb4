@@ -1,20 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace Labb_4_Version_2
+namespace Labb4
 {
-    public class Player
+
+    public class Player : Square
     {
         //Egenskaper ?
         //Egenskap för tecken iom den här klassen ligger utanför hierarkin?
+        private const char playerSign = (char)Signs.s4;
+        public static char PlayerSign
+        {
+            get { return playerSign; }
+            //set { floorSign = value; }
+        }
 
-        public char playerSign = '@';
-
-        private int amountOfKeys = 0;
-        
+        //public char playerSign = '@';
 
         //Funktioner?
         //"Interagera med omgivning!!!"  //EXTREMT VIKTIG SKALL DET VARA EN FUNKTION HÄR ELLER INBYGGT I KARTAN?
@@ -23,4 +25,9 @@ namespace Labb_4_Version_2
         public Player() //Konstruktor, vilka parametrar till den??
         { }
     }
+
+
+
+
+
 }

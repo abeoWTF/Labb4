@@ -4,19 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Labb_4_Version_2
+namespace Labb4
 {
-    public class Map : ISendToMap
+    public class Map
     {
-        public void SendSign()
-        {
-
-        }
-        internal char wallSign;
-        internal char floorSign;
-        internal char playerSign;
-        internal char doorSign;
-
         public void TheMap()
         {
             //Bygga karta.
@@ -34,7 +25,7 @@ namespace Labb_4_Version_2
                 {
                     if (row == 0 || row == ROWS - 1 || column == 0 || column == COLUMNS - 1)
                     {
-                        theMap[column, row] = wallSign;
+                        theMap[column, row] = Wall.WallSign;
                     }
                     else if (row == 4 && column == 9 ||
                              row == 4 && column == 10 ||
@@ -53,18 +44,18 @@ namespace Labb_4_Version_2
                              row == 8 && column == 9
                              )
                     {
-                        theMap[column, row] = wallSign;
+                        theMap[column, row] = Wall.WallSign;
                     }
 
                     else if (row == 5 && column == 9 || row == 4 && column == 15)
                     {
-                        theMap[column, row] = doorSign;
+                        theMap[column, row] = Door.DoorSign;
 
                     }
 
                     else
                     {
-                        theMap[column, row] = floorSign;
+                        theMap[column, row] = Floor.FloorSign;
                     }
 
                 }
@@ -75,7 +66,7 @@ namespace Labb_4_Version_2
                 //Röra sig i spelet.
                 int row;
                 int column;
-                
+
                 string buffer = "";
                 for (row = 0; row < ROWS; row++)
                 {
@@ -83,7 +74,7 @@ namespace Labb_4_Version_2
                     for (column = 0; column < COLUMNS; column++)
                     {
                         if (column == playerX && row == playerY)
-                            line += playerSign;
+                            line += Player.PlayerSign;
                         else
                             line += theMap[column, row];
                     }
@@ -92,13 +83,13 @@ namespace Labb_4_Version_2
 
                 bool CanPass(int playerx, int playery)
                 {
-                    if (theMap[playerx, playery] == wallSign)
+                    if (theMap[playerx, playery] == Wall.WallSign)
                     {
                         return false;
                     }
                     else
                     {
-                        return true; 
+                        return true;
                     }
 
                 }
@@ -113,7 +104,7 @@ namespace Labb_4_Version_2
                 {
                     if (playerX != 1 && CanPass(playerX - 1, playerY))
                     {
-                        Counter.MovesControl();
+                        Counter.AddMoves();
                         playerX--;
                     }
                 }
@@ -121,7 +112,7 @@ namespace Labb_4_Version_2
                 {
                     if (playerY != ROWS - 2 && CanPass(playerX, playerY + 1))
                     {
-                        Counter.MovesControl();
+                        Counter.AddMoves();
                         playerY++;
                     }
                 }
@@ -129,7 +120,7 @@ namespace Labb_4_Version_2
                 {
                     if (playerX != COLUMNS - 2 && CanPass(playerX + 1, playerY))
                     {
-                        Counter.MovesControl();
+                        Counter.AddMoves();
                         playerX++;
                     }
                 }
@@ -137,7 +128,7 @@ namespace Labb_4_Version_2
                 {
                     if (playerY != 1 && CanPass(playerX, playerY - 1))
                     {
-                        Counter.MovesControl();
+                        Counter.AddMoves();
                         playerY--;
                     }
                 }
@@ -146,9 +137,7 @@ namespace Labb_4_Version_2
             }
 
 
-
         }
 
-        
     }
 }

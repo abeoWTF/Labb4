@@ -1,19 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace Labb_4_Version_2
+namespace Labb4
 {
+
     public class Door : Square, ISendToMap
     {
 
         //Egenskaper 
-        static bool doorOpen = false;
+        bool doorOpen = false;
 
         private const char doorSign = (char)Signs.s2;
-        public char DoorSign
+        public static char DoorSign
         {
             get { return doorSign; }
             //set { floorSign = value; }
@@ -24,23 +23,35 @@ namespace Labb_4_Version_2
 
         Keys k = new Keys();
 
-        public static void CheckKey()
+
+        protected void CheckKey()
         {
-            if (Counter.KeyExist())
-            {
+            if (Keys.keyExist())
                 doorOpen = true;
-                Counter.RemoveKey();
-            }
+            Counter.RemoveKeys();
         }
 
-
-        public void SendSign()  //Skicka tecken till Map-klassen
+        public char SendSign()  //Skicka tecken till Map-klassen
         {
-            Console.WriteLine(DoorSign);
+            char send = DoorSign;
+            return send;
+
         }
+
+
+
+
+
 
         public Door()  //Konstruktor, vilka parametrar till den??
         { }
 
     }
+
+
+
+
+
+
+
 }
