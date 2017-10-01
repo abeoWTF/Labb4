@@ -16,8 +16,6 @@ namespace Labb4
             //set { floorSign = value; }
         }
 
-
-
         //Funktioner?
 
         public char SendSign()  //Skicka tecken till Map-klassen
@@ -31,14 +29,5 @@ namespace Labb4
         {
 
         }
-
-
     }
-
-
-
-
-
-
-
 }

@@ -18,11 +18,9 @@ namespace Labb4
             //set { floorSign = value; }
         }
 
-
         //Funktioner?
 
         Keys k = new Keys();
-
 
         protected void CheckKey()
         {
@@ -35,23 +33,10 @@ namespace Labb4
         {
             char send = DoorSign;
             return send;
-
         }
-
-
-
-
-
 
         public Door()  //Konstruktor, vilka parametrar till den??
         { }
 
     }
-
-
-
-
-
-
-
 }

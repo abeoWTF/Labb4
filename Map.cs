@@ -52,7 +52,10 @@ namespace Labb4
                         theMap[column, row] = Door.DoorSign;
 
                     }
-
+                    else if (row == 4 && column == 5)
+                    {
+                        theMap[column, row] = RoomWithKey.RoomSign;
+                    }
                     else
                     {
                         theMap[column, row] = Floor.FloorSign;
@@ -91,7 +94,6 @@ namespace Labb4
                     {
                         return true;
                     }
-
                 }
 
                 Console.CursorLeft = 0;

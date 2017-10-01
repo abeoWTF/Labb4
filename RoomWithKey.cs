@@ -10,14 +10,11 @@ namespace Labb4
 
         //Egenskaper ?
         private const char roomSign = (char)Signs.s6;
-        public char RoomSign
+        public static char RoomSign
         {
             get { return roomSign; }
             //set { floorSign = value; }
         }
-
-
-
         //Funktioner?
 
         public char SendSign()  //Skicka tecken till Map-klassen

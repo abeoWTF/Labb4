@@ -20,18 +20,9 @@ namespace Labb4
                 return false;
             }
         }
-
-        
-        
-
-
         //Funktioner?
 
         public Keys()  //Konstruktor, vilka parametrar till den??
         { }
     }
-
-
-
-
 }
