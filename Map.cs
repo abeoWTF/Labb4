@@ -98,7 +98,7 @@ namespace Labb_4_Version_2
                     }
                     else
                     {
-                        return true;
+                        return true; 
                     }
 
                 }
