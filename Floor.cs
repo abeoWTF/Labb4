@@ -1,34 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace Labb_4_Version_2
+namespace Labb4
 {
+
     public class Floor : Square, ISendToMap
     {
 
         //Egenskaper 
         private const char floorSign = (char)Signs.s5;
-        public char FloorSign
+        public static char FloorSign
         {
             get { return floorSign; }
-            //set { floorSign = value; }
+            set { FloorSign = value; }
         }
-
 
         //Funktioner?
 
-        public void SendSign()  //Skicka tecken till Map-klassen
+        public char SendSign()  //Skicka tecken till Map-klassen
         {
-            Console.WriteLine(FloorSign);
+            char send = FloorSign;
+            return send;
         }
-
-
+                
         public Floor() //Konstruktor, vilka parametrar till den??
         { }
-
-
     }
 }

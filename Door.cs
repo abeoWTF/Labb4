@@ -1,46 +1,65 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace Labb_4_Version_2
+namespace Labb4
 {
+
     public class Door : Square, ISendToMap
     {
 
         //Egenskaper 
-        static bool doorOpen = false;
-
+        private static bool doorOpen;
+        public static bool DoorOpen{ get => doorOpen; set => doorOpen = value; }
+        
         private const char doorSign = (char)Signs.s2;
-        public char DoorSign
+        public static char DoorSign
         {
             get { return doorSign; }
-            //set { floorSign = value; }
+            //set { doorSign = value; }
         }
-
 
         //Funktioner?
 
         Keys k = new Keys();
 
-        public static void CheckKey()
+        public static bool CheckKey(char sign)
         {
-            if (Counter.KeyExist())
+            if (Keys.keyExist())
             {
-                doorOpen = true;
-                Counter.RemoveKey();
+                DoorOpen = true;
+                Counter.RemoveKeys();
+                DoorOpened(DoorSign);
+                return true;
+            } 
+            else
+            {
+                Console.Clear();
+                Console.CursorTop = 11;
+                Console.WriteLine($"You have no keys.");
+                DoorOpen = false;
+                return false;
             }
         }
 
-
-        public void SendSign()  //Skicka tecken till Map-klassen
+        public static void DoorOpened(char sign)
         {
-            Console.WriteLine(DoorSign);
+            if(DoorOpen)
+            {
+                sign = Floor.FloorSign;
+            }
+        }
+
+        public char SendSign()  //Skicka tecken till Map-klassen
+        {
+            char send = DoorSign;
+            return send;
         }
 
         public Door()  //Konstruktor, vilka parametrar till den??
         { }
+
+        
 
     }
 }

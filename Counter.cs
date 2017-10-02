@@ -1,61 +1,74 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace Labb_4_Version_2
+namespace Labb4
 {
-    public class Counter: ISendToMap
-    {
 
+    public class Counter
+    {
         //Egenskaper:
         private static int keyAmount = 1;
         private static int movesAmount = 0;
-        private int points = 0;
-        
-        public int KeyAmount { get=> keyAmount; set => keyAmount = value; }
+        private static int points = 0;
+
+        public int KeyAmount{ get => keyAmount; set => keyAmount = value; }
+        public int MovesAmount { get => movesAmount; set => movesAmount = value; }
+        public int Points { get => points; set => points = value; }
+
 
         //Funktioner:
 
         //ökar och minskar värdet för varje motsvarande egenskap (ovan)
-        public void KeyControl()
-        { }
+        public static int AddKeys()
+        {
+            return keyAmount++;
+        }
+        public static int RemoveKeys()
+        {
+            return keyAmount--;
+        }
 
+        public static int AddMoves()
+        {
+            return movesAmount++;
+        }
 
-        public static bool KeyExist()
+        public static int pointsControl()
+        {
+            return points++;
+        }
+
+        public static void AnnounceMoves()
+        {
+            Console.CursorLeft = 24;
+            Console.CursorTop = 2;
+            Console.WriteLine($"Amount of moves: {movesAmount}.");
+        }
+
+        public static int AnnounceKeys()
+        {
+            return keyAmount;
+        }
+
+        public static bool HasKey()
         {
             if (keyAmount > 0)
             {
                 return true;
             }
-            else return false;
+            else
+            {
+                return false;
+            }
         }
-
-        public static void RemoveKey()
-        {
-            keyAmount--;
-        }
-
-        public static void MovesControl()
-        {
-            movesAmount++;
-        }
-
-        public static void MovesAnnouncer()
-        {
-            Console.WriteLine($"You have moved {movesAmount} times.");
-        }
-
-        public void pointsControl()
-        { }
-
         public Counter()  //Konstruktor, vilka parametrar till den??
         { }
 
-        public void SendSign()  //Skicka tecken till Map-klassen
-        {
-            
-        }
     }
+
+
+
+
+
 }

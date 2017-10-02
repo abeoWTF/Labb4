@@ -5,30 +5,29 @@ using System.Text;
 namespace Labb4
 {
 
-    public class Exit : Square, ISendToMap
+    public class RoomWithKey : Square, ISendToMap
     {
 
         //Egenskaper ?
-
-        private const char exitSign = (char)Signs.s7;
-        public char ExitSign
+        private const char roomSign = (char)Signs.s6;
+        public static char RoomSign
         {
-            get { return exitSign; }
+            get { return roomSign; }
             //set { floorSign = value; }
         }
-
         //Funktioner?
 
         public char SendSign()  //Skicka tecken till Map-klassen
         {
-            char send = ExitSign;
+            char send = RoomSign;
             return send;
         }
 
-        public Exit()  //Konstruktor, vilka parametrar till den??
+        public RoomWithKey()  ////Konstruktor, vilka parametrar till den??
         { }
-
     }
+
+
 
 
 

@@ -46,16 +46,14 @@
     <Compile Include="Door.cs" />
     <Compile Include="Exit.cs" />
     <Compile Include="Floor.cs" />
-    <Compile Include="Interface1.cs" />
     <Compile Include="ISendToMap.cs" />
     <Compile Include="Keys.cs" />
     <Compile Include="Map.cs" />
     <Compile Include="Monster.cs" />
     <Compile Include="Player.cs" />
-    <Compile Include="Porgram.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Room.cs" />
+    <Compile Include="RoomWithKey.cs" />
     <Compile Include="Square.cs" />
     <Compile Include="Wall.cs" />
   </ItemGroup>
