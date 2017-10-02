@@ -8,7 +8,7 @@ namespace Labb4
     public class Counter
     {
         //Egenskaper:
-        private static int keyAmount = 0;
+        private static int keyAmount = 1;
         private static int movesAmount = 0;
         private static int points = 0;
 
@@ -39,9 +39,16 @@ namespace Labb4
             return points++;
         }
 
-        public static int AnnounceMoves()
+        public static void AnnounceMoves()
         {
-            return movesAmount;
+            Console.CursorLeft = 24;
+            Console.CursorTop = 2;
+            Console.WriteLine($"Amount of moves: {movesAmount}.");
+        }
+
+        public static int AnnounceKeys()
+        {
+            return keyAmount;
         }
 
         public static bool HasKey()

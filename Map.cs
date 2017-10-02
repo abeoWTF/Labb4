@@ -9,7 +9,9 @@ namespace Labb4
     public class Map
     {
         public void TheMap()
-        {   
+        {
+            Door firstDoor = new Door();
+
             //Bygga karta.
             int playerX = 3;
             int playerY = 3;
@@ -49,7 +51,8 @@ namespace Labb4
 
                     else if (row == 5 && column == 9 || row == 4 && column == 15)
                     {
-                        theMap[column, row] = Door.DoorSign;
+                       
+                        theMap[column, row] = firstDoor.SendSign();
 
                     }
                     else if (row == 4 && column == 5)
@@ -90,22 +93,35 @@ namespace Labb4
                     {
                         return false;
                     }
-                    else
+                    if (theMap[playerx, playery] == firstDoor.SendSign())
                     {
-                        return true;
+                        if (Door.CheckKey(firstDoor.SendSign()))
+                        {
+                            Console.WriteLine($"Blimey! You have used a key. You have {Counter.AnnounceKeys()} keys left.");
+                            theMap[playerx, playery] = Floor.FloorSign;
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
                     }
+                    return true;
                 }
 
                 Console.CursorLeft = 0;
                 Console.CursorTop = 0;
                 Console.Write($"{buffer}");
 
+                
                 ConsoleKeyInfo pressedKey = Console.ReadKey();
                 Console.WriteLine(pressedKey.Key.ToString());
+
                 if (pressedKey.Key.ToString() == "A")
                 {
                     if (playerX != 1 && CanPass(playerX - 1, playerY))
                     {
+                        Counter.AnnounceMoves();
                         Counter.AddMoves();
                         playerX--;
                     }
@@ -114,6 +130,7 @@ namespace Labb4
                 {
                     if (playerY != ROWS - 2 && CanPass(playerX, playerY + 1))
                     {
+                        Counter.AnnounceMoves();
                         Counter.AddMoves();
                         playerY++;
                     }
@@ -122,6 +139,7 @@ namespace Labb4
                 {
                     if (playerX != COLUMNS - 2 && CanPass(playerX + 1, playerY))
                     {
+                        Counter.AnnounceMoves();
                         Counter.AddMoves();
                         playerX++;
                     }
@@ -130,10 +148,12 @@ namespace Labb4
                 {
                     if (playerY != 1 && CanPass(playerX, playerY - 1))
                     {
+                        Counter.AnnounceMoves();
                         Counter.AddMoves();
                         playerY--;
                     }
                 }
+                
 
 
             }

@@ -10,10 +10,8 @@ namespace Labb4
 
         //Egenskaper 
         private static bool doorOpen;
-
         public static bool DoorOpen{ get => doorOpen; set => doorOpen = value; }
-
-
+        
         private const char doorSign = (char)Signs.s2;
         public static char DoorSign
         {
@@ -25,24 +23,28 @@ namespace Labb4
 
         Keys k = new Keys();
 
-        public static void CheckKey()
+        public static bool CheckKey(char sign)
         {
             if (Keys.keyExist())
             {
                 DoorOpen = true;
                 Counter.RemoveKeys();
                 DoorOpened(DoorSign);
-                Counter.AddMoves();                
-            }
+                return true;
+            } 
             else
             {
+                Console.Clear();
+                Console.CursorTop = 11;
+                Console.WriteLine($"You have no keys.");
                 DoorOpen = false;
+                return false;
             }
         }
 
         public static void DoorOpened(char sign)
         {
-            if(DoorOpen == true)
+            if(DoorOpen)
             {
                 sign = Floor.FloorSign;
             }
