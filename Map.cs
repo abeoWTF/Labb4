@@ -9,7 +9,7 @@ namespace Labb4
     public class Map
     {
         public void TheMap()
-        {
+        {   
             //Bygga karta.
             int playerX = 3;
             int playerY = 3;

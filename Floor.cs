@@ -13,7 +13,7 @@ namespace Labb4
         public static char FloorSign
         {
             get { return floorSign; }
-            //set { floorSign = value; }
+            set { FloorSign = value; }
         }
 
         //Funktioner?
@@ -23,7 +23,7 @@ namespace Labb4
             char send = FloorSign;
             return send;
         }
-
+                
         public Floor() //Konstruktor, vilka parametrar till den??
         { }
     }

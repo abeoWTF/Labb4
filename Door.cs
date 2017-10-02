@@ -9,24 +9,43 @@ namespace Labb4
     {
 
         //Egenskaper 
-        bool doorOpen = false;
+        private static bool doorOpen;
+
+        public static bool DoorOpen{ get => doorOpen; set => doorOpen = value; }
+
 
         private const char doorSign = (char)Signs.s2;
         public static char DoorSign
         {
             get { return doorSign; }
-            //set { floorSign = value; }
+            //set { doorSign = value; }
         }
 
         //Funktioner?
 
         Keys k = new Keys();
 
-        protected void CheckKey()
+        public static void CheckKey()
         {
             if (Keys.keyExist())
-                doorOpen = true;
-            Counter.RemoveKeys();
+            {
+                DoorOpen = true;
+                Counter.RemoveKeys();
+                DoorOpened(DoorSign);
+                Counter.AddMoves();                
+            }
+            else
+            {
+                DoorOpen = false;
+            }
+        }
+
+        public static void DoorOpened(char sign)
+        {
+            if(DoorOpen == true)
+            {
+                sign = Floor.FloorSign;
+            }
         }
 
         public char SendSign()  //Skicka tecken till Map-klassen
@@ -37,6 +56,8 @@ namespace Labb4
 
         public Door()  //Konstruktor, vilka parametrar till den??
         { }
+
+        
 
     }
 }
