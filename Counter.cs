@@ -8,11 +8,11 @@ namespace Labb4
     public class Counter
     {
         //Egenskaper:
-        private static int keyAmount = 1;
+        private static int keyAmount = 0;
         private static int movesAmount = 0;
         private static int points = 0;
 
-        public int KeyAmount{ get => keyAmount; set => keyAmount = value; }
+        public int KeyAmount { get => keyAmount; set => keyAmount = value; }
         public int MovesAmount { get => movesAmount; set => movesAmount = value; }
         public int Points { get => points; set => points = value; }
 
@@ -39,16 +39,9 @@ namespace Labb4
             return points++;
         }
 
-        public static void AnnounceMoves()
+        public static int AnnounceMoves()
         {
-            Console.CursorLeft = 24;
-            Console.CursorTop = 2;
-            Console.WriteLine($"Amount of moves: {movesAmount}.");
-        }
-
-        public static int AnnounceKeys()
-        {
-            return keyAmount;
+            return movesAmount;
         }
 
         public static bool HasKey()
