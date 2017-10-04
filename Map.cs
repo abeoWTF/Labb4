@@ -12,10 +12,12 @@ namespace Labb4
         char[,] theMap = new char[COLUMNS, ROWS];
 
         //startvärde för player
-        private int playerX=3;
-        private int playerY=3;
+        private int playerX = 2;
+        private int playerY = 2;
 
-       
+        //Instansiera
+        Counter c = new Counter();
+        RoomWithKey r = new RoomWithKey();
 
         //Egenskaper för tecken + motsvarnade setters
 
@@ -32,33 +34,23 @@ namespace Labb4
         public void FetchWallSign() { Wall w = new Wall(); WallSign = w.SendSign(); }
         public void FetchFloorSign() { Floor f = new Floor(); FloorSign = f.SendSign(); }
         public void FetchPlayerSign() { Player p = new Player(); PlayerSign = p.PlayerSign; }
-        public void FetchDoorSign(){ Door d = new Door(); DoorSign = d.SendSign(); }
+        public void FetchDoorSign() { Door d = new Door(); DoorSign = d.SendSign(); }
         public void FetchExitSign() { Exit e = new Exit(); ExitSign = e.SendSign(); }
         public void FetchMonsterSign() { Monster m = new Monster(); MonsterSign = m.SendSign(); }
         public void FetchRoomWithKeySign() { RoomWithKey r = new RoomWithKey(); RoomWithKeySign = r.SendSign(); }
-
-       
-       
         
-
-
-
-
-
         //Funktioner?
         //Tar emot indaata från bl.a spelarklassen och även kartans olika tecken/delar från hierarkin
         public void AccceptData()  //får bli fler funktioner samt egenskaper för dessa eller om egenskaperna går direkt ner i kartan??
         {
-            
-        }
 
-        
+        }
 
         //2D-array + ev utskrift och än ner ev ned interfajs??
         public void RenderMap()  //Får indata till dess parametrar....eller nog bättre ta det i konstruktorn pga skapa kartan måste ju vara det absoliut viktigaste och första man gör, eller?
         {
 
-           
+
 
             //const int ROWS = 10;
             //const int COLUMNS = 20;
@@ -73,25 +65,55 @@ namespace Labb4
                     {
                         theMap[column, row] = WallSign;
                     }
-                    else if (true)
-                        for (int i = 4; i <= 4; i++)
-                        {
-                            for (column = 9; column <= 18; column++)
-                            {
-                                theMap[column, row] = WallSign;
-                            }
-                        }
+                    else if(
+                             row == 4 && column == 9 ||
+                             row == 4 && column == 10 ||
+                             row == 4 && column == 11 ||
+                             row == 4 && column == 12 ||
+                             row == 4 && column == 13 ||
+                             row == 4 && column == 14 ||
+                             row == 4 && column == 16 ||
+                             row == 4 && column == 17 ||
+                             row == 4 && column == 18 ||
+                             row == 3 && column == 9 ||
+                             row == 3 && column == 1 ||
+                             row == 3 && column == 2 ||
+                             row == 3 && column == 3 ||
+                             row == 3 && column == 4 ||
+                             row == 3 && column == 5 ||
+                             row == 3 && column == 6 ||
+                             row == 3 && column == 8 ||
+                             row == 2 && column == 9 ||
+                             row == 1 && column == 9 ||
+                             row == 6 && column == 9 ||
+                             row == 7 && column == 9 ||
+                             row == 8 && column == 9
+                             )
 
+                            {
+                        theMap[column, row] = WallSign;
+                            }
                     
+
+
 
                     else if (row == 5 && column == 9 || row == 4 && column == 15)
                     {
                         theMap[column, row] = DoorSign;
 
                     }
-                    else if (row == 4 && column == 5)
+                    else if (row == 4 && column == 5 || row == 1 && column == 8)
                     {
                         theMap[column, row] = RoomWithKeySign;
+                    }
+
+                    else if(row == 7 && column == 17 )
+                    {
+                        theMap[column, row] = MonsterSign;
+                    }
+                    else if( row == 2 && column == 18)
+                    {
+                        theMap[column, row] = ExitSign;
                     }
                     else
                     {
@@ -106,7 +128,7 @@ namespace Labb4
 
         }
 
-        
+
 
         public void UpdateMap()   //Uppdaterar vid varje enstaka sak som händer så en ny karta ritas ut och stop-motion animering sker. tar emot anrop från subklasserna i hierarkins implementering av interfacet
         {
@@ -114,7 +136,7 @@ namespace Labb4
 
             while (true)
             {
-                
+
                 int row;
                 int column;
 
@@ -128,23 +150,61 @@ namespace Labb4
 
                 //char[,] theMap = new char[COLUMNS, ROWS];
 
-                string buffer = "";
-                for (row = 0; row < ROWS; row++)
+
+
+
+                //    string buffer = "";
+                //for (row = 0; row < ROWS; row++)
+                //{
+                //    string line = "";
+                //    for (column = 0; column < COLUMNS; column++)
+                //    {
+                //        if (column == playerX && row == playerY)
+                //            line += PlayerSign;
+                //        else
+                //            line += theMap[column, row];
+                //    }
+                //    buffer += line + "\n";
+                //}
+                Console.CursorLeft = 0;
+                Console.CursorTop = 0;
+                
+                int rows = theMap.GetLength(0);
+                int cols = theMap.GetLength(1);
+                for (int jj = 0; jj < cols; jj++)
                 {
-                    string line = "";
-                    for (column = 0; column < COLUMNS; column++)
+                    for (int ii = 0; ii < rows; ii++)
                     {
-                        if (column == playerX && row == playerY)
-                            line += PlayerSign;
-                        else
-                            line += theMap[column, row];
+                        if (ii == playerX && jj == playerY)
+                        {
+                            Console.Write(PlayerSign);
+                        }
+                        else if (jj == playerY && ii == playerX || jj == playerY - 1 && ii == playerX || jj == playerY + 1 && ii == playerX ||
+                            jj == playerY && ii == playerX - 1 || jj == playerY && ii == playerX + 1 || jj == playerY - 1 && ii == playerX - 1 ||
+                            jj == playerY - 1 && ii == playerX + 1 || jj == playerY + 1 && ii == playerX - 1 || jj == playerY + 1 && ii == playerX + 1 ||
+                            ii == rows - 1 || ii == 0 || jj == cols - 1 || jj == 0)
+                        {
+                            Console.Write(theMap[ii, jj]);
+                        }
+                        
+                            else
+                        {
+                            Console.Write(" ");
+                        }
                     }
-                    buffer += line + "\n";
+                    Console.WriteLine();
                 }
 
                 bool CanPass(int playerx, int playery)
                 {
-                    if (theMap[playerx, playery] == WallSign)
+                    if (theMap[playerx, playery] == r.RoomSign)
+                    {
+                        c.AddKeys();                        
+                        theMap[playerx, playery] = FloorSign;
+                        return true;
+                        
+                    }
+                    else if (theMap[playerx, playery] == WallSign)
                     {
                         return false;
                     }
@@ -154,9 +214,8 @@ namespace Labb4
                     }
                 }
 
-                Console.CursorLeft = 0;
-                Console.CursorTop = 0;
-                Console.Write($"{buffer}");
+                
+                //Console.Write($"{buffer}");
 
                 ConsoleKeyInfo pressedKey = Console.ReadKey();
                 Console.WriteLine(pressedKey.Key.ToString());
@@ -164,18 +223,22 @@ namespace Labb4
                 {
                     if (playerX != 1 && CanPass(playerX - 1, playerY))
                     {
-                        Counter.AddMoves();
+                        c.AddMoves();
+                        c.AnnounceMoves();
+
                         playerX--;
-                        
+
                     }
                 }
                 else if (pressedKey.Key.ToString() == "S")
                 {
                     if (playerY != ROWS - 2 && CanPass(playerX, playerY + 1))
                     {
-                        Counter.AddMoves();
+                        c.AddMoves();
+                        c.AnnounceMoves();
+
                         playerY++;
-                        
+
 
                     }
                 }
@@ -183,9 +246,11 @@ namespace Labb4
                 {
                     if (playerX != COLUMNS - 2 && CanPass(playerX + 1, playerY))
                     {
-                        Counter.AddMoves();
+                        c.AddMoves();
+                        c.AnnounceMoves();
+
                         playerX++;
-                       
+
 
                     }
                 }
@@ -193,9 +258,10 @@ namespace Labb4
                 {
                     if (playerY != 1 && CanPass(playerX, playerY - 1))
                     {
-                        Counter.AddMoves();
+                        c.AddMoves();
+                        c.AnnounceMoves();
                         playerY--;
-                       
+
 
                     }
                 }
@@ -203,7 +269,7 @@ namespace Labb4
 
             }
 
-       }
+        }
 
 
         //***************************************************************************
@@ -227,7 +293,7 @@ namespace Labb4
 
         }
 
-       
+
     }
 
 

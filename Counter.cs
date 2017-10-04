@@ -8,43 +8,67 @@ namespace Labb4
     public class Counter
     {
         //Egenskaper:
-        private static int keyAmount = 0;
-        private static int movesAmount = 0;
-        private static int points = 0;
+        private int keyAmount = 0;
+        private int movesAmount = 0;
+        private int points = 0;
+        private bool superKey;
 
         public int KeyAmount { get => keyAmount; set => keyAmount = value; }
         public int MovesAmount { get => movesAmount; set => movesAmount = value; }
         public int Points { get => points; set => points = value; }
-
-
+        public bool SuperKey { get => superKey; set => superKey = value; }
+        
         //Funktioner:
 
         //ökar och minskar värdet för varje motsvarande egenskap (ovan)
-        public static int AddKeys()
+        public int AddKeys()
         {
+            Console.WriteLine($"{++keyAmount}");
             return keyAmount++;
         }
-        public static int RemoveKeys()
+
+        public void KeysAnnounce()
+        {
+            Console.WriteLine($"You have {KeyAmount} keys.");
+        }
+
+        public int RemoveKeys()
         {
             return keyAmount--;
         }
 
-        public static int AddMoves()
+        public int AddMoves()
         {
             return movesAmount++;
         }
 
-        public static int pointsControl()
+        //Poängräkning - klarar man av spelet på få moves får man mer poäng.
+        public int pointsControl()
         {
-            return points++;
+            if (MovesAmount < 20)
+            {
+                return Points += 1000;
+            }
+            else if (MovesAmount < 30)
+            {
+                return Points += 500;
+            }
+            else
+                return 250;
         }
 
-        public static int AnnounceMoves()
+        public int MonsterTakesPoints()
         {
+            return Points -= 200;
+        }
+
+        public int AnnounceMoves()
+        {
+            Console.WriteLine($"You have used {MovesAmount} moves.");
             return movesAmount;
         }
 
-        public static bool HasKey()
+        public bool HasKey()
         {
             if (keyAmount > 0)
             {
@@ -57,6 +81,13 @@ namespace Labb4
         }
         public Counter()  //Konstruktor, vilka parametrar till den??
         { }
+
+        // Om vi ska använda oss av superkeys? (t.ex. "Has superkey?".)
+
+        public Counter(bool superKey)
+        {
+            this.superKey = SuperKey;
+        }
 
     }
 
