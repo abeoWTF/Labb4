@@ -217,7 +217,10 @@ namespace Labb4
                         GamoOver();
                         c.setCursor(4, 1);
                         Console.Write($"You did it!");
-                        
+                        c.setCursor(2, 5);
+                        Console.Write($"G A M E  O V E R");
+
+
                         return true;
                     }
                     else if (theMap[playerx, playery] == DoorSign)
