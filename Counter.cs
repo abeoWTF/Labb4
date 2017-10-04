@@ -8,52 +8,102 @@ namespace Labb4
     public class Counter
     {
         //Egenskaper:
-        private static int keyAmount = 1;
-        private static int movesAmount = 0;
-        private static int points = 0;
+        private int keyAmount = 0;
+        private int movesAmount = 0;
+        private int points = 3000;
+        private bool superKey;
 
-        public int KeyAmount{ get => keyAmount; set => keyAmount = value; }
+        public int KeyAmount { get => keyAmount; set => keyAmount = value; }
         public int MovesAmount { get => movesAmount; set => movesAmount = value; }
         public int Points { get => points; set => points = value; }
-
-
+        public bool SuperKey { get => superKey; set => superKey = value; }
+        
         //Funktioner:
 
         //ökar och minskar värdet för varje motsvarande egenskap (ovan)
-        public static int AddKeys()
+        public void AddKeys()
         {
-            return keyAmount++;
-        }
-        public static int RemoveKeys()
-        {
-            return keyAmount--;
+            Console.CursorTop = 3;
+            Console.CursorLeft = 22;
+            KeyAmount += 1;
+            if (keyAmount > 1)
+                Console.WriteLine($"You found a key! You have {KeyAmount} keys.\n");            
+            else
+                Console.WriteLine($"You found a key! You have {KeyAmount} key.\n");
+
         }
 
-        public static int AddMoves()
+        //public void KeysAnnounce()
+        //{
+        //    Console.WriteLine($"You have {KeyAmount} keys.");
+        //}
+
+        public void RemoveKeys()
+        {
+            Console.CursorTop = 3;
+            Console.CursorLeft = 22;
+            KeyAmount -= 1;
+            if (keyAmount > 0)
+                Console.WriteLine($"You have used a key! You have {KeyAmount} key.\n");
+            else
+                Console.WriteLine($"You have used a key! You have {KeyAmount} keys.\n");
+        }
+
+        public int AddMoves()
         {
             return movesAmount++;
         }
 
-        public static int pointsControl()
+        //Poängräkning - klarar man av spelet på få moves får man mer poäng.
+        public void  pointsControl()
         {
-            return points++;
+            if (MovesAmount > 30)
+            {
+                Points -= 25;
+            }
+            else if (MovesAmount > 40)
+            {
+                Points -= 50;
+            }
         }
 
-        public static void AnnounceMoves()
+        public void MonsterTakesPoints()
         {
-            Console.CursorLeft = 24;
-            Console.CursorTop = 2;
-            Console.WriteLine($"Amount of moves: {movesAmount}.");
+            setCursor(22, 4);
+            Console.WriteLine($"A monster-battle!");
+            setCursor(22, 5);
+            Console.WriteLine($"You've won the battle but it costed time (-300 points)");
+            
+            
+            Points -= 300;
         }
 
-        public static int AnnounceKeys()
+        public void AnnounceMoves()
         {
-            return keyAmount;
+            AmountOfKeys();
+            AmountofPoints();
+            pointsControl();
+            setCursor(1, 13);
+            Console.WriteLine($"Moves: {MovesAmount}");
+            
         }
 
-        public static bool HasKey()
+        public void AmountOfKeys()
         {
-            if (keyAmount > 0)
+            setCursor(12, 13);
+            Console.WriteLine($"Keys: {KeyAmount}");
+
+        }
+        public void AmountofPoints()
+        {
+            setCursor(23, 13);
+            Console.WriteLine($"Points: {Points}");
+
+        }
+
+        public bool HasKey()
+        {
+            if (KeyAmount > 0)
             {
                 return true;
             }
@@ -62,8 +112,21 @@ namespace Labb4
                 return false;
             }
         }
+        //Bestämma vart texten skrivs ut.
+        public void setCursor(int left, int top)
+        {
+            Console.CursorLeft = left;
+            Console.CursorTop = top;
+        }
         public Counter()  //Konstruktor, vilka parametrar till den??
         { }
+
+        // Om vi ska använda oss av superkeys? (t.ex. "Has superkey?".)
+
+        public Counter(bool superKey)
+        {
+            this.superKey = SuperKey;
+        }
 
     }
 
