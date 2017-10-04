@@ -18,6 +18,7 @@ namespace Labb4
         //Instansiera
         Counter c = new Counter();
         RoomWithKey r = new RoomWithKey();
+        Keys k = new Keys();
 
         //Egenskaper för tecken + motsvarnade setters
 
@@ -61,7 +62,7 @@ namespace Labb4
             {
                 for (int column = 0; column < COLUMNS; column++)
                 {
-                    if (row == 0 || row == ROWS - 1 || column == 0 || column == COLUMNS - 1)
+                    if (row == 0 || row == 9 || column == 0 || column == 19)
                     {
                         theMap[column, row] = WallSign;
                     }
@@ -97,7 +98,7 @@ namespace Labb4
 
 
 
-                    else if (row == 5 && column == 9 || row == 4 && column == 15)
+                    else if (row == 5 && column == 9 || row == 4 && column == 15 )
                     {
                         theMap[column, row] = DoorSign;
 
@@ -107,7 +108,7 @@ namespace Labb4
                         theMap[column, row] = RoomWithKeySign;
                     }
 
-                    else if(row == 7 && column == 17 )
+                    else if(row == 7 && column == 17 || row == 4 && column == 8 || row == 8 && column == 3)
                     {
                         theMap[column, row] = MonsterSign;
                     }
@@ -132,13 +133,12 @@ namespace Labb4
 
         public void UpdateMap()   //Uppdaterar vid varje enstaka sak som händer så en ny karta ritas ut och stop-motion animering sker. tar emot anrop från subklasserna i hierarkins implementering av interfacet
         {
-
-
-            while (true)
+            bool GameOn = true; 
+            while (GameOn == true)
             {
 
-                int row;
-                int column;
+                //int row;
+                //int column;
 
                 //int playerX = PlayerXStartValue;
                 //int playerY = PlayerYStartValue;
@@ -194,6 +194,7 @@ namespace Labb4
                     }
                     Console.WriteLine();
                 }
+                //Kolla vad som sker vid tecken-interaktion och om man kan passera.
 
                 bool CanPass(int playerx, int playery)
                 {
@@ -206,12 +207,49 @@ namespace Labb4
                     }
                     else if (theMap[playerx, playery] == WallSign)
                     {
+                        c.AnnounceMoves();
                         return false;
+                    }
+
+                    else if (theMap[playerx, playery] == ExitSign)
+                    {
+                        GameOn = false;
+                        GamoOver();
+                        c.setCursor(4, 1);
+                        Console.Write($"You did it!");
+                        
+                        return true;
+                    }
+                    else if (theMap[playerx, playery] == DoorSign)
+                    {
+                        if (c.HasKey())
+                        {
+                            c.RemoveKeys();
+                            theMap[playerx, playery] = FloorSign;
+                            return true;
+                        }
+                        
+                        else
+                        {
+                            c.AnnounceMoves();
+                            c.setCursor(1,11);
+                            Console.WriteLine($"Blimey! You don't have a key... Find one.");
+                            return false;
+                        }
+                       
+                    }
+
+                    else if (theMap[playerx, playery] == MonsterSign)
+                    {
+                        theMap[playerx, playery] = FloorSign;
+                        c.MonsterTakesPoints();
+                        return true;
                     }
                     else
                     {
                         return true;
                     }
+                    
                 }
 
                 
@@ -219,15 +257,14 @@ namespace Labb4
 
                 ConsoleKeyInfo pressedKey = Console.ReadKey();
                 Console.WriteLine(pressedKey.Key.ToString());
+                Console.Clear();
                 if (pressedKey.Key.ToString() == "A")
                 {
                     if (playerX != 1 && CanPass(playerX - 1, playerY))
                     {
                         c.AddMoves();
                         c.AnnounceMoves();
-
                         playerX--;
-
                     }
                 }
                 else if (pressedKey.Key.ToString() == "S")
@@ -236,10 +273,7 @@ namespace Labb4
                     {
                         c.AddMoves();
                         c.AnnounceMoves();
-
                         playerY++;
-
-
                     }
                 }
                 else if (pressedKey.Key.ToString() == "D")
@@ -248,10 +282,7 @@ namespace Labb4
                     {
                         c.AddMoves();
                         c.AnnounceMoves();
-
                         playerX++;
-
-
                     }
                 }
                 else if (pressedKey.Key.ToString() == "W")
@@ -261,8 +292,6 @@ namespace Labb4
                         c.AddMoves();
                         c.AnnounceMoves();
                         playerY--;
-
-
                     }
                 }
 
@@ -271,7 +300,23 @@ namespace Labb4
 
         }
 
+        public void GamoOver()
+        {
+            Wall wall = new Wall();
+            FetchWallSign();
 
+            for (int row = 0; row < ROWS; row++)
+            {
+                for (int column = 0; column < COLUMNS; column++)
+                {
+                    Console.Write($"{WallSign}"); 
+                }
+                Console.WriteLine();
+
+            }
+            Console.WriteLine($"\n(Press any key to end.)");
+           
+        }
         //***************************************************************************
         //*
         //* fog of war = funktoner, egenskaper för det.  YES PLZZZZZZZZZZZZZ!!!

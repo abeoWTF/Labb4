@@ -10,7 +10,7 @@ namespace Labb4
         //Egenskaper:
         private int keyAmount = 0;
         private int movesAmount = 0;
-        private int points = 0;
+        private int points = 3000;
         private bool superKey;
 
         public int KeyAmount { get => keyAmount; set => keyAmount = value; }
@@ -21,20 +21,32 @@ namespace Labb4
         //Funktioner:
 
         //ökar och minskar värdet för varje motsvarande egenskap (ovan)
-        public int AddKeys()
+        public void AddKeys()
         {
-            Console.WriteLine($"{++keyAmount}");
-            return keyAmount++;
+            Console.CursorTop = 3;
+            Console.CursorLeft = 22;
+            KeyAmount += 1;
+            if (keyAmount > 1)
+                Console.WriteLine($"You found a key! You have {KeyAmount} keys.\n");            
+            else
+                Console.WriteLine($"You found a key! You have {KeyAmount} key.\n");
+
         }
 
-        public void KeysAnnounce()
-        {
-            Console.WriteLine($"You have {KeyAmount} keys.");
-        }
+        //public void KeysAnnounce()
+        //{
+        //    Console.WriteLine($"You have {KeyAmount} keys.");
+        //}
 
-        public int RemoveKeys()
+        public void RemoveKeys()
         {
-            return keyAmount--;
+            Console.CursorTop = 3;
+            Console.CursorLeft = 22;
+            KeyAmount -= 1;
+            if (keyAmount > 0)
+                Console.WriteLine($"You have used a key! You have {KeyAmount} key.\n");
+            else
+                Console.WriteLine($"You have used a key! You have {KeyAmount} keys.\n");
         }
 
         public int AddMoves()
@@ -43,34 +55,55 @@ namespace Labb4
         }
 
         //Poängräkning - klarar man av spelet på få moves får man mer poäng.
-        public int pointsControl()
+        public void  pointsControl()
         {
-            if (MovesAmount < 20)
+            if (MovesAmount > 30)
             {
-                return Points += 1000;
+                Points -= 25;
             }
-            else if (MovesAmount < 30)
+            else if (MovesAmount > 40)
             {
-                return Points += 500;
+                Points -= 50;
             }
-            else
-                return 250;
         }
 
-        public int MonsterTakesPoints()
+        public void MonsterTakesPoints()
         {
-            return Points -= 200;
+            setCursor(22, 4);
+            Console.WriteLine($"A monster-battle!");
+            setCursor(22, 5);
+            Console.WriteLine($"You've won the battle but it costed time (-300 points)");
+            
+            
+            Points -= 300;
         }
 
-        public int AnnounceMoves()
+        public void AnnounceMoves()
         {
-            Console.WriteLine($"You have used {MovesAmount} moves.");
-            return movesAmount;
+            AmountOfKeys();
+            AmountofPoints();
+            pointsControl();
+            setCursor(1, 13);
+            Console.WriteLine($"Moves: {MovesAmount}");
+            
+        }
+
+        public void AmountOfKeys()
+        {
+            setCursor(12, 13);
+            Console.WriteLine($"Keys: {KeyAmount}");
+
+        }
+        public void AmountofPoints()
+        {
+            setCursor(23, 13);
+            Console.WriteLine($"Points: {Points}");
+
         }
 
         public bool HasKey()
         {
-            if (keyAmount > 0)
+            if (KeyAmount > 0)
             {
                 return true;
             }
@@ -78,6 +111,12 @@ namespace Labb4
             {
                 return false;
             }
+        }
+        //Bestämma vart texten skrivs ut.
+        public void setCursor(int left, int top)
+        {
+            Console.CursorLeft = left;
+            Console.CursorTop = top;
         }
         public Counter()  //Konstruktor, vilka parametrar till den??
         { }
