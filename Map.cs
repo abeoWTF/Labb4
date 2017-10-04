@@ -1,27 +1,34 @@
 ﻿using System;
+using System.Threading;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Labb4
+
+namespace Labb4_enLitenUpdate
 {
+    
     public class Map
     {
-        //Till kartan:
+        
+        //Uppbyggnad av kart-array + on/off-funktion för spel
         private const int ROWS = 10;
         private const int COLUMNS = 20;
-        char[,] theMap = new char[COLUMNS, ROWS];
+        char[,] TheMap = new char[COLUMNS, ROWS];
+
+        private bool gameOn;
+        public bool GameOn { get { return gameOn; } set { gameOn = value; } }
+
 
         //startvärde för player
-        private int playerX = 2;
-        private int playerY = 2;
+        private int startValueForPlayerX;
+        private int startValueForPlayerY;
 
-        //Instansiera
+        //Instansiering av objekt utanför kartklass för använding i densamma
         Counter c = new Counter();
         RoomWithKey r = new RoomWithKey();
         Keys k = new Keys();
 
         //Egenskaper för tecken + motsvarnade setters
-
         private char wallSign = 'a'; public char WallSign { get { return wallSign; } set { wallSign = value; } }
         private char floorSign = 'a'; public char FloorSign { get { return floorSign; } set { floorSign = value; } }
         private char playerSign = 'a'; public char PlayerSign { get { return playerSign; } set { playerSign = value; } }
@@ -31,7 +38,6 @@ namespace Labb4
         private char roomWithKeySign = 'a'; public char RoomWithKeySign { get { return roomWithKeySign; } set { roomWithKeySign = value; } }
 
         //metoder för att hämta tecken från teckenklasserna och initiera tecken-egenskaperna för kartklassen:
-
         public void FetchWallSign() { Wall w = new Wall(); WallSign = w.SendSign(); }
         public void FetchFloorSign() { Floor f = new Floor(); FloorSign = f.SendSign(); }
         public void FetchPlayerSign() { Player p = new Player(); PlayerSign = p.PlayerSign; }
@@ -39,34 +45,20 @@ namespace Labb4
         public void FetchExitSign() { Exit e = new Exit(); ExitSign = e.SendSign(); }
         public void FetchMonsterSign() { Monster m = new Monster(); MonsterSign = m.SendSign(); }
         public void FetchRoomWithKeySign() { RoomWithKey r = new RoomWithKey(); RoomWithKeySign = r.SendSign(); }
-        
-        //Funktioner?
-        //Tar emot indaata från bl.a spelarklassen och även kartans olika tecken/delar från hierarkin
-        public void AccceptData()  //får bli fler funktioner samt egenskaper för dessa eller om egenskaperna går direkt ner i kartan??
+
+
+        //Skapar kartan och lägger in tecken.
+        public void RenderMap()  
         {
-
-        }
-
-        //2D-array + ev utskrift och än ner ev ned interfajs??
-        public void RenderMap()  //Får indata till dess parametrar....eller nog bättre ta det i konstruktorn pga skapa kartan måste ju vara det absoliut viktigaste och första man gör, eller?
-        {
-
-
-
-            //const int ROWS = 10;
-            //const int COLUMNS = 20;
-
-            //char[,] theMap = new char[COLUMNS, ROWS];
-
             for (int row = 0; row < ROWS; row++)
             {
                 for (int column = 0; column < COLUMNS; column++)
                 {
                     if (row == 0 || row == 9 || column == 0 || column == 19)
                     {
-                        theMap[column, row] = WallSign;
+                        TheMap[column, row] = WallSign;
                     }
-                    else if(
+                    else if (
                              row == 4 && column == 9 ||
                              row == 4 && column == 10 ||
                              row == 4 && column == 11 ||
@@ -90,104 +82,62 @@ namespace Labb4
                              row == 7 && column == 9 ||
                              row == 8 && column == 9
                              )
-
-                            {
-                        theMap[column, row] = WallSign;
-                            }
-                    
-
-
-
-                    else if (row == 5 && column == 9 || row == 4 && column == 15 )
                     {
-                        theMap[column, row] = DoorSign;
+                        TheMap[column, row] = WallSign;
+                    }
+                    else if (row == 5 && column == 9 || row == 4 && column == 15)
+                    {
+                        TheMap[column, row] = DoorSign;
 
                     }
                     else if (row == 4 && column == 5 || row == 1 && column == 8)
                     {
-                        theMap[column, row] = RoomWithKeySign;
+                        TheMap[column, row] = RoomWithKeySign;
                     }
 
-                    else if(row == 7 && column == 17 || row == 4 && column == 8 || row == 8 && column == 3)
+                    else if (row == 7 && column == 17 || row == 4 && column == 8 || row == 8 && column == 3)
                     {
-                        theMap[column, row] = MonsterSign;
+                        TheMap[column, row] = MonsterSign;
                     }
-                    else if( row == 2 && column == 18)
+                    else if (row == 2 && column == 18)
                     {
-                        theMap[column, row] = ExitSign;
+                        TheMap[column, row] = ExitSign;
                     }
                     else
                     {
-                        theMap[column, row] = FloorSign;
+                        TheMap[column, row] = FloorSign;
                     }
-
                 }
             }
-
-
-
-
         }
 
-
-
-        public void UpdateMap()   //Uppdaterar vid varje enstaka sak som händer så en ny karta ritas ut och stop-motion animering sker. tar emot anrop från subklasserna i hierarkins implementering av interfacet
+        //Ritar ut kartan
+        public void UpdateMap()   
         {
-            bool GameOn = true; 
             while (GameOn == true)
             {
-
-                //int row;
-                //int column;
-
-                //int playerX = PlayerXStartValue;
-                //int playerY = PlayerYStartValue;
-
-
-
-                //const int ROWS = 10;
-                //const int COLUMNS = 20;
-
-                //char[,] theMap = new char[COLUMNS, ROWS];
-
-
-
-
-                //    string buffer = "";
-                //for (row = 0; row < ROWS; row++)
-                //{
-                //    string line = "";
-                //    for (column = 0; column < COLUMNS; column++)
-                //    {
-                //        if (column == playerX && row == playerY)
-                //            line += PlayerSign;
-                //        else
-                //            line += theMap[column, row];
-                //    }
-                //    buffer += line + "\n";
-                //}
                 Console.CursorLeft = 0;
                 Console.CursorTop = 0;
-                
-                int rows = theMap.GetLength(0);
-                int cols = theMap.GetLength(1);
+
+                int rows = TheMap.GetLength(0);
+                int cols = TheMap.GetLength(1);
                 for (int jj = 0; jj < cols; jj++)
                 {
                     for (int ii = 0; ii < rows; ii++)
                     {
-                        if (ii == playerX && jj == playerY)
+                        if (ii == startValueForPlayerX && jj == startValueForPlayerY)
                         {
                             Console.Write(PlayerSign);
                         }
-                        else if (jj == playerY && ii == playerX || jj == playerY - 1 && ii == playerX || jj == playerY + 1 && ii == playerX ||
-                            jj == playerY && ii == playerX - 1 || jj == playerY && ii == playerX + 1 || jj == playerY - 1 && ii == playerX - 1 ||
-                            jj == playerY - 1 && ii == playerX + 1 || jj == playerY + 1 && ii == playerX - 1 || jj == playerY + 1 && ii == playerX + 1 ||
+                        else if (jj == startValueForPlayerY && ii == startValueForPlayerX || jj == startValueForPlayerY - 1 && ii == startValueForPlayerX || jj == startValueForPlayerY + 1 && ii == startValueForPlayerX ||
+                            jj == startValueForPlayerY && ii == startValueForPlayerX - 1 || jj == startValueForPlayerY && ii == startValueForPlayerX + 1 || jj == startValueForPlayerY - 1 && ii == startValueForPlayerX - 1 ||
+                            jj == startValueForPlayerY - 1 && ii == startValueForPlayerX + 1 || jj == startValueForPlayerY + 1 && ii == startValueForPlayerX - 1 || jj == startValueForPlayerY + 1 && ii == startValueForPlayerX + 1 ||
                             ii == rows - 1 || ii == 0 || jj == cols - 1 || jj == 0)
                         {
-                            Console.Write(theMap[ii, jj]);
+                            Console.Write(TheMap[ii, jj]);
                         }
-                        
-                            else
+
+                        else
                         {
                             Console.Write(" ");
                         }
@@ -198,53 +148,68 @@ namespace Labb4
 
                 bool CanPass(int playerx, int playery)
                 {
-                    if (theMap[playerx, playery] == r.RoomSign)
+                    if(c.Points == 0)
                     {
-                        c.AddKeys();                        
-                        theMap[playerx, playery] = FloorSign;
-                        return true;
-                        
+                        //Slut på poäng - Game over.
+                        GameOn = false;
+                        GamoOver();
+                        c.setCursor(3, 1);
+                        Console.Write($"Out of points!");
+                        c.setCursor(2, 5);
+                        Thread.Sleep(1500);
+                        Console.Write($"G A M E  O V E R");
+                        return false;
                     }
-                    else if (theMap[playerx, playery] == WallSign)
+
+                    if (TheMap[playerx, playery] == r.RoomSign)
                     {
+                        //Golv
+                        c.AddKeys();
+                        TheMap[playerx, playery] = FloorSign;
+                        return true;
+                    }
+                    else if (TheMap[playerx, playery] == WallSign)
+                    {
+                        //Vägg
                         c.AnnounceMoves();
                         return false;
                     }
 
-                    else if (theMap[playerx, playery] == ExitSign)
+                    else if (TheMap[playerx, playery] == ExitSign)
                     {
+                        //Hittat utgången
                         GameOn = false;
                         GamoOver();
                         c.setCursor(4, 1);
                         Console.Write($"You did it!");
+                        Thread.Sleep(2500);
                         c.setCursor(2, 5);
                         Console.Write($"G A M E  O V E R");
-
-
                         return true;
                     }
-                    else if (theMap[playerx, playery] == DoorSign)
+                    else if (TheMap[playerx, playery] == DoorSign)
                     {
+                        //Låst dörr - Har nyckel
                         if (c.HasKey())
                         {
                             c.RemoveKeys();
-                            theMap[playerx, playery] = FloorSign;
+                            TheMap[playerx, playery] = FloorSign;
                             return true;
                         }
-                        
+
                         else
                         {
+                        //Låst dörr - Har inte nyckel
                             c.AnnounceMoves();
-                            c.setCursor(1,11);
+                            c.setCursor(22, 5);
                             Console.WriteLine($"Blimey! You don't have a key... Find one.");
                             return false;
                         }
-                       
                     }
-
-                    else if (theMap[playerx, playery] == MonsterSign)
+                    //Monster
+                    else if (TheMap[playerx, playery] == MonsterSign)
                     {
-                        theMap[playerx, playery] = FloorSign;
+                        TheMap[playerx, playery] = FloorSign;
                         c.MonsterTakesPoints();
                         return true;
                     }
@@ -252,85 +217,83 @@ namespace Labb4
                     {
                         return true;
                     }
-                    
                 }
 
-                
-                //Console.Write($"{buffer}");
+                //Spelarrörelse
 
                 ConsoleKeyInfo pressedKey = Console.ReadKey();
                 Console.WriteLine(pressedKey.Key.ToString());
                 Console.Clear();
                 if (pressedKey.Key.ToString() == "A")
                 {
-                    if (playerX != 1 && CanPass(playerX - 1, playerY))
+                    if (startValueForPlayerX != 1 && CanPass(startValueForPlayerX - 1, startValueForPlayerY))
                     {
                         c.AddMoves();
                         c.AnnounceMoves();
-                        playerX--;
+                        startValueForPlayerX--;
                     }
                 }
                 else if (pressedKey.Key.ToString() == "S")
                 {
-                    if (playerY != ROWS - 2 && CanPass(playerX, playerY + 1))
+                    if (startValueForPlayerY != ROWS - 2 && CanPass(startValueForPlayerX, startValueForPlayerY + 1))
                     {
                         c.AddMoves();
                         c.AnnounceMoves();
-                        playerY++;
+                        startValueForPlayerY++;
                     }
                 }
                 else if (pressedKey.Key.ToString() == "D")
                 {
-                    if (playerX != COLUMNS - 2 && CanPass(playerX + 1, playerY))
+                    if (startValueForPlayerX != COLUMNS - 2 && CanPass(startValueForPlayerX + 1, startValueForPlayerY))
                     {
                         c.AddMoves();
                         c.AnnounceMoves();
-                        playerX++;
+                        startValueForPlayerX++;
                     }
                 }
                 else if (pressedKey.Key.ToString() == "W")
                 {
-                    if (playerY != 1 && CanPass(playerX, playerY - 1))
+                    if (startValueForPlayerY != 1 && CanPass(startValueForPlayerX, startValueForPlayerY - 1))
                     {
                         c.AddMoves();
                         c.AnnounceMoves();
-                        playerY--;
+                        startValueForPlayerY--;
                     }
                 }
-
-
+                else if (pressedKey.Key.ToString() == "Y")
+                {
+                    Console.WriteLine($"Game Exiting...");
+                    Thread.Sleep(3000);
+                    Environment.Exit(0);
+                }
             }
-
         }
-
+        //Game Over
         public void GamoOver()
         {
             Wall wall = new Wall();
+            Map map = new Map();
+
             FetchWallSign();
 
             for (int row = 0; row < ROWS; row++)
             {
                 for (int column = 0; column < COLUMNS; column++)
                 {
-                    Console.Write($"{WallSign}"); 
+                    Console.Write($"{WallSign}");
                 }
                 Console.WriteLine();
-
             }
-            Console.WriteLine($"\n(Press any key to end.)");
-           
+
+            map.GameOn = false;
+            Thread.Sleep(3000);
+            if(c.Points == 0) 
+            Console.WriteLine($"\n\n(Press any key to end.)");
         }
-        //***************************************************************************
-        //*
-        //* fog of war = funktoner, egenskaper för det.  YES PLZZZZZZZZZZZZZ!!!
-        //*
-        //****************************************************************************
-
-
-
+        
         public Map()
         {
-            //initiering av tecknen för kartan vid instasiering av objekt
+            //initiering av tecknen för kartan vid instansiering av objekt
             FetchWallSign();
             FetchFloorSign();
             FetchPlayerSign();
@@ -339,16 +302,11 @@ namespace Labb4
             FetchMonsterSign();
             FetchRoomWithKeySign();
 
+            //Initering av egenskaper för kartan
+            GameOn = true;
+            startValueForPlayerX = 2;
+            startValueForPlayerY = 2;
         }
-
-
     }
-
-
-
-
-
-
-
 }
 

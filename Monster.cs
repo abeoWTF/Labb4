@@ -2,21 +2,16 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Labb4
+namespace Labb4_enLitenUpdate
 {
-
-
-    public class Monster : Square, ISendToMap
+    public class Monster : Square, IMakeSignSendable
     {
-        //Egenskaper
-        private const char monsterSign = (char)Signs.s3;
+        private char monsterSign;
         public char MonsterSign
         {
             get { return monsterSign; }
-            //set { floorSign = value; }
+            set { monsterSign = value; }
         }
-
-        //Funktioner?
 
         public char SendSign()  //Skicka tecken till Map-klassen
         {
@@ -27,7 +22,7 @@ namespace Labb4
 
         public Monster()
         {
-
+            MonsterSign = (char)Signs.s3;
         }
     }
 }

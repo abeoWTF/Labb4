@@ -2,32 +2,17 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Labb4
+namespace Labb4_enLitenUpdate
 {
 
-    public class Player : Square
+    public class Player
     {
-        //Egenskaper ?
-        //Egenskap för tecken iom den här klassen ligger utanför hierarkin?
-        private const char playerSign = (char)Signs.s4;
-        public static char PlayerSign
+        private char playerSign;
+        public char PlayerSign { get { return playerSign; } set { playerSign = value; } }
+
+        public Player() 
         {
-            get { return playerSign; }
-            //set { floorSign = value; }
+            PlayerSign = '@';  //Spelar-tecken till map-klassen
         }
-
-        //public char playerSign = '@';
-
-        //Funktioner?
-        //"Interagera med omgivning!!!"  //EXTREMT VIKTIG SKALL DET VARA EN FUNKTION HÄR ELLER INBYGGT I KARTAN?
-        //Interagera med andra rum som monster, dörrar osv!! vilket genererar funktioner, egenskaper etc
-
-        public Player() //Konstruktor, vilka parametrar till den??
-        { }
     }
-
-
-
-
-
 }

@@ -2,20 +2,16 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Labb4
+namespace Labb4_enLitenUpdate
 {
-
-    public class RoomWithKey : Square, ISendToMap
+    public class RoomWithKey : Square, IMakeSignSendable
     {
-
-        //Egenskaper ?
-        private const char roomSign = (char)Signs.s6;
-        public static char RoomSign
+        private char roomSign;
+        public char RoomSign
         {
             get { return roomSign; }
-            //set { floorSign = value; }
+            set { roomSign = value; }
         }
-        //Funktioner?
 
         public char SendSign()  //Skicka tecken till Map-klassen
         {
@@ -23,13 +19,9 @@ namespace Labb4
             return send;
         }
 
-        public RoomWithKey()  ////Konstruktor, vilka parametrar till den??
-        { }
+        public RoomWithKey()  
+        {
+            RoomSign = (char)Signs.s6;
+        }
     }
-
-
-
-
-
-
 }
