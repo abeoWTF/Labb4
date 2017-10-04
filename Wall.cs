@@ -2,27 +2,27 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Labb4
+namespace Labb4_enLitenUpdate
 {
-    public class Wall : Square, ISendToMap
+    public class Wall : Square, IMakeSignSendable
     {
-        //Egenskaper 
-
-        private const char wallSign = (char)Signs.s1;
-        public static char WallSign
+        private char wallSign;
+        public char WallSign
         {
             get { return wallSign; }
-            //set { floorSign = value; }
+            set { wallSign = value; }
         }
-        //Funktioner?
 
         public char SendSign()  //Skicka tecken till Map-klassen
         {
             char send = WallSign;
             return send;
         }
-        public Wall()
-        { }
+
+        public Wall()     
+        {
+            WallSign = (char)Signs.s1;
+        }
     }
 
 }
