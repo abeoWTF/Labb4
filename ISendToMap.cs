@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Labb4
+namespace Labb4_enLitenUpdate
 {
     //Interfajs för metod som skickar tecken till Map-klassen
 
-    interface ISendToMap
+    interface IMakeSignSendable
     {
         char SendSign();
     }
