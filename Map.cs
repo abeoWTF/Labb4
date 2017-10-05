@@ -47,7 +47,7 @@ namespace Labb4_enLitenUpdate
         public void FetchRoomWithKeySign() { RoomWithKey r = new RoomWithKey(); RoomWithKeySign = r.SendSign(); }
 
 
-        //Skapar kartan och lägger in tecken.
+        //Skapar kartan
         public void RenderMap()  
         {
             for (int row = 0; row < ROWS; row++)
@@ -82,9 +82,14 @@ namespace Labb4_enLitenUpdate
                              row == 7 && column == 9 ||
                              row == 8 && column == 9
                              )
+
                     {
                         TheMap[column, row] = WallSign;
                     }
+
+
+
+
                     else if (row == 5 && column == 9 || row == 4 && column == 15)
                     {
                         TheMap[column, row] = DoorSign;
@@ -107,15 +112,23 @@ namespace Labb4_enLitenUpdate
                     {
                         TheMap[column, row] = FloorSign;
                     }
+
                 }
             }
+
+
+
+
         }
+
 
         //Ritar ut kartan
         public void UpdateMap()   
         {
+            
             while (GameOn == true)
             {
+
                 Console.CursorLeft = 0;
                 Console.CursorTop = 0;
 
@@ -150,7 +163,6 @@ namespace Labb4_enLitenUpdate
                 {
                     if(c.Points == 0)
                     {
-                        //Slut på poäng - Game over.
                         GameOn = false;
                         GamoOver();
                         c.setCursor(3, 1);
@@ -163,21 +175,19 @@ namespace Labb4_enLitenUpdate
 
                     if (TheMap[playerx, playery] == r.RoomSign)
                     {
-                        //Golv
                         c.AddKeys();
                         TheMap[playerx, playery] = FloorSign;
                         return true;
+
                     }
                     else if (TheMap[playerx, playery] == WallSign)
                     {
-                        //Vägg
                         c.AnnounceMoves();
                         return false;
                     }
 
                     else if (TheMap[playerx, playery] == ExitSign)
                     {
-                        //Hittat utgången
                         GameOn = false;
                         GamoOver();
                         c.setCursor(4, 1);
@@ -189,7 +199,6 @@ namespace Labb4_enLitenUpdate
                     }
                     else if (TheMap[playerx, playery] == DoorSign)
                     {
-                        //Låst dörr - Har nyckel
                         if (c.HasKey())
                         {
                             c.RemoveKeys();
@@ -199,14 +208,15 @@ namespace Labb4_enLitenUpdate
 
                         else
                         {
-                        //Låst dörr - Har inte nyckel
+                            
                             c.AnnounceMoves();
                             c.setCursor(22, 5);
                             Console.WriteLine($"Blimey! You don't have a key... Find one.");
                             return false;
                         }
+
                     }
-                    //Monster
+
                     else if (TheMap[playerx, playery] == MonsterSign)
                     {
                         TheMap[playerx, playery] = FloorSign;
@@ -217,9 +227,11 @@ namespace Labb4_enLitenUpdate
                     {
                         return true;
                     }
+
                 }
 
-                //Spelarrörelse
+
+                //Console.Write($"{buffer}");
 
                 ConsoleKeyInfo pressedKey = Console.ReadKey();
                 Console.WriteLine(pressedKey.Key.ToString());
@@ -266,9 +278,12 @@ namespace Labb4_enLitenUpdate
                     Thread.Sleep(3000);
                     Environment.Exit(0);
                 }
+
+
             }
+
         }
-        //Game Over
+
         public void GamoOver()
         {
             Wall wall = new Wall();
@@ -283,12 +298,14 @@ namespace Labb4_enLitenUpdate
                     Console.Write($"{WallSign}");
                 }
                 Console.WriteLine();
-            }
 
+            }
             map.GameOn = false;
             Thread.Sleep(3000);
             if(c.Points == 0) 
             Console.WriteLine($"\n\n(Press any key to end.)");
+            
+
         }
         
         public Map()
@@ -306,7 +323,17 @@ namespace Labb4_enLitenUpdate
             GameOn = true;
             startValueForPlayerX = 2;
             startValueForPlayerY = 2;
+
         }
+
+
     }
+
+
+
+
+
+
+
 }
 
