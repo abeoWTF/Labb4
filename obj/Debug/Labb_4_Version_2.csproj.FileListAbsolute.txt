@@ -1,7 +1,0 @@
-c:\users\abeo\source\repos\Labb_4_Version_2\Labb_4_Version_2\bin\Debug\Labb_4_Version_2.exe.config
-c:\users\abeo\source\repos\Labb_4_Version_2\Labb_4_Version_2\bin\Debug\Labb_4_Version_2.exe
-c:\users\abeo\source\repos\Labb_4_Version_2\Labb_4_Version_2\bin\Debug\Labb_4_Version_2.pdb
-c:\users\abeo\source\repos\Labb_4_Version_2\Labb_4_Version_2\obj\Debug\Labb_4_Version_2.csprojResolveAssemblyReference.cache
-c:\users\abeo\source\repos\Labb_4_Version_2\Labb_4_Version_2\obj\Debug\Labb_4_Version_2.csproj.CoreCompileInputs.cache
-c:\users\abeo\source\repos\Labb_4_Version_2\Labb_4_Version_2\obj\Debug\Labb_4_Version_2.exe
-c:\users\abeo\source\repos\Labb_4_Version_2\Labb_4_Version_2\obj\Debug\Labb_4_Version_2.pdb
