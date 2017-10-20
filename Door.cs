@@ -2,52 +2,32 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Labb4
+namespace Labb4_enLitenUpdate
 {
 
-    public class Door : Square, ISendToMap
+    public class Door : Square, IMakeSignSendable
     {
+        private bool doorOpen;
+        public bool DoorOpen
+        {
+            get { return doorOpen; }
+            set { doorOpen = value; }
+        }
 
-        //Egenskaper 
-        private static bool doorOpen;
-        public static bool DoorOpen{ get => doorOpen; set => doorOpen = value; }
-        
-        private const char doorSign = (char)Signs.s2;
-        public static char DoorSign
+        private char doorSign;
+        public char DoorSign
         {
             get { return doorSign; }
-            //set { doorSign = value; }
+            set { doorSign = value; }
         }
 
-        //Funktioner?
-
-        Keys k = new Keys();
-
-        public static bool CheckKey(char sign)
+        //kolla om nyckel finns
+        protected void CheckKey()
         {
-            if (Keys.keyExist())
-            {
+            if (Keys.KeyExist())
                 DoorOpen = true;
-                Counter.RemoveKeys();
-                DoorOpened(DoorSign);
-                return true;
-            } 
-            else
-            {
-                Console.Clear();
-                Console.CursorTop = 11;
-                Console.WriteLine($"You have no keys.");
-                DoorOpen = false;
-                return false;
-            }
-        }
-
-        public static void DoorOpened(char sign)
-        {
-            if(DoorOpen)
-            {
-                sign = Floor.FloorSign;
-            }
+            Counter c = new Counter();
+            c.RemoveKeys();
         }
 
         public char SendSign()  //Skicka tecken till Map-klassen
@@ -56,10 +36,11 @@ namespace Labb4
             return send;
         }
 
-        public Door()  //Konstruktor, vilka parametrar till den??
-        { }
-
-        
+        public Door()
+        {
+            DoorOpen = false;
+            DoorSign = (char)Signs.s2;
+        }
 
     }
 }

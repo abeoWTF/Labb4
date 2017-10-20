@@ -2,22 +2,17 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Labb4
+namespace Labb4_enLitenUpdate
 {
 
-    public class Exit : Square, ISendToMap
+    public class Exit : Square, IMakeSignSendable
     {
-
-        //Egenskaper ?
-
-        private const char exitSign = (char)Signs.s7;
+        private char exitSign;
         public char ExitSign
         {
             get { return exitSign; }
-            //set { floorSign = value; }
+            set { exitSign = value; }
         }
-
-        //Funktioner?
 
         public char SendSign()  //Skicka tecken till Map-klassen
         {
@@ -25,12 +20,11 @@ namespace Labb4
             return send;
         }
 
-        public Exit()  //Konstruktor, vilka parametrar till den??
-        { }
+        public Exit()  
+        {
+            ExitSign = (char)Signs.s7;
+
+        }
 
     }
-
-
-
-
 }

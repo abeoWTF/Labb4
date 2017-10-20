@@ -2,16 +2,17 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Labb4
+namespace Labb4_enLitenUpdate
 {
 
     public class Keys
     {
-        //Egenskaper ?
-
-        public static bool keyExist()
+        //kollar om nyckel finns
+        public static bool KeyExist()
         {
-            if (Counter.HasKey())
+            Counter c = new Counter();
+
+            if (c.HasKey())
             {
                 return true;
             }
@@ -20,9 +21,7 @@ namespace Labb4
                 return false;
             }
         }
-        //Funktioner?
-
-        public Keys()  //Konstruktor, vilka parametrar till den??
+        public Keys()  
         { }
     }
 }

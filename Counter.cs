@@ -1,23 +1,25 @@
 ﻿using System;
+using System.Threading;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Labb4
+namespace Labb4_enLitenUpdate
 {
 
     public class Counter
     {
         //Egenskaper:
-        private int keyAmount = 0;
-        private int movesAmount = 0;
-        private int points = 3000;
+
+        private int keyAmount;
+        private int movesAmount;
+        private int points;
         private bool superKey;
 
         public int KeyAmount { get => keyAmount; set => keyAmount = value; }
         public int MovesAmount { get => movesAmount; set => movesAmount = value; }
         public int Points { get => points; set => points = value; }
         public bool SuperKey { get => superKey; set => superKey = value; }
-        
+
         //Funktioner:
 
         //ökar och minskar värdet för varje motsvarande egenskap (ovan)
@@ -27,16 +29,10 @@ namespace Labb4
             Console.CursorLeft = 22;
             KeyAmount += 1;
             if (keyAmount > 1)
-                Console.WriteLine($"You found a key! You have {KeyAmount} keys.\n");            
+                Console.WriteLine($"You found a key! You have {KeyAmount} keys.\n");
             else
                 Console.WriteLine($"You found a key! You have {KeyAmount} key.\n");
-
         }
-
-        //public void KeysAnnounce()
-        //{
-        //    Console.WriteLine($"You have {KeyAmount} keys.");
-        //}
 
         public void RemoveKeys()
         {
@@ -55,7 +51,7 @@ namespace Labb4
         }
 
         //Poängräkning - klarar man av spelet på få moves får man mer poäng.
-        public void  pointsControl()
+        public void pointsControl()
         {
             if (MovesAmount > 30)
             {
@@ -65,16 +61,21 @@ namespace Labb4
             {
                 Points -= 50;
             }
+            else if (points <= 0)
+            {
+                Map m = new Map();
+                Thread.Sleep(1500);
+                m.GameOn = false;
+                m.GamoOver();
+            }
         }
-
+       
         public void MonsterTakesPoints()
         {
             setCursor(22, 4);
             Console.WriteLine($"A monster-battle!");
             setCursor(22, 5);
             Console.WriteLine($"You've won the battle but it costed time (-300 points)");
-            
-            
             Points -= 300;
         }
 
@@ -83,16 +84,22 @@ namespace Labb4
             AmountOfKeys();
             AmountofPoints();
             pointsControl();
+            AnnounceExit();
             setCursor(1, 13);
             Console.WriteLine($"Moves: {MovesAmount}");
-            
+
+        }
+
+        public void AnnounceExit()
+        {
+            setCursor(1,17);
+            Console.WriteLine($"(to quit, press 'Y'.)");
         }
 
         public void AmountOfKeys()
         {
             setCursor(12, 13);
             Console.WriteLine($"Keys: {KeyAmount}");
-
         }
         public void AmountofPoints()
         {
@@ -118,20 +125,12 @@ namespace Labb4
             Console.CursorLeft = left;
             Console.CursorTop = top;
         }
-        public Counter()  //Konstruktor, vilka parametrar till den??
-        { }
-
-        // Om vi ska använda oss av superkeys? (t.ex. "Has superkey?".)
-
-        public Counter(bool superKey)
+        public Counter()
         {
-            this.superKey = SuperKey;
+            keyAmount = 0;
+            movesAmount = 0;
+            points = 3000;
         }
-
     }
-
-
-
-
-
 }
+
