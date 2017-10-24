@@ -17,6 +17,8 @@ namespace Labb4_enLitenUpdate
             * */
             //Skapande av kartklass inklusive initering av tecknen i kartan
             Map m = new Map();
+            
+
 
             //Initiering av karta
             m.RenderMap();
