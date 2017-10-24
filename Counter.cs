@@ -32,13 +32,7 @@ namespace Labb4_enLitenUpdate
                 Console.WriteLine($"You found a key! You have {KeyAmount} keys.\n");
             else
                 Console.WriteLine($"You found a key! You have {KeyAmount} key.\n");
-
         }
-
-        //public void KeysAnnounce()
-        //{
-        //    Console.WriteLine($"You have {KeyAmount} keys.");
-        //}
 
         public void RemoveKeys()
         {
@@ -74,8 +68,6 @@ namespace Labb4_enLitenUpdate
                 m.GameOn = false;
                 m.GamoOver();
             }
-                
-
         }
        
         public void MonsterTakesPoints()
@@ -138,10 +130,7 @@ namespace Labb4_enLitenUpdate
             keyAmount = 0;
             movesAmount = 0;
             points = 3000;
-
         }
-
     }
-
 }
 
