@@ -5,14 +5,22 @@ using System.Text;
 namespace Labb4_enLitenUpdate
 {
 
-    public class Player
+    public class Player : Square, IMakeSignSendable
     {
-        private char playerSign;
-        public char PlayerSign { get { return playerSign; } set { playerSign = value; } }
-
-        public Player() 
+        public Player()
         {
-            PlayerSign = '@';  //Spelar-tecken till map-klassen
+            Tile = (char)Signs.s1;
         }
+        public void Print()
+        {
+            Console.Write(Tile);
+        }
+        //private char playerSign;
+        //public char PlayerSign { get { return playerSign; } set { playerSign = value; } }
+
+        //public Player() 
+        //{
+        //    PlayerSign = '@';  //Spelar-tecken till map-klassen
+        //}
     }
 }
