@@ -8,6 +8,6 @@ namespace Labb4_enLitenUpdate
 
     interface IMakeSignSendable
     {
-        char SendSign();
+        void Print();
     }
 }

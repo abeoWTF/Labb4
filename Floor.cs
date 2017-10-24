@@ -6,25 +6,33 @@ namespace Labb4_enLitenUpdate
 {
     public class Floor : Square, IMakeSignSendable
     {
-        //Egenskaper 
-        private char floorSign;
-        public char FloorSign
+        public Floor()
         {
-            get { return floorSign; }
-            set { floorSign = value; }
+            Tile = (char)Signs.s5;
         }
-
-        //Funktioner?
-
-        public char SendSign()  //Skicka tecken till Map-klassen
+        public void Print()
         {
-            char send = FloorSign;
-            return send;
+            Console.Write(Tile);
         }
+        ////Egenskaper 
+        //private char floorSign;
+        //public char FloorSign
+        //{
+        //    get { return floorSign; }
+        //    set { floorSign = value; }
+        //}
 
-        public Floor() //Konstruktor, vilka parametrar till den??
-        {
-            FloorSign = (char)Signs.s5;
-        }
+        ////Funktioner?
+
+        //public char SendSign()  //Skicka tecken till Map-klassen
+        //{
+        //    char send = FloorSign;
+        //    return send;
+        //}
+
+        //public Floor() //Konstruktor, vilka parametrar till den??
+        //{
+        //    FloorSign = (char)Signs.s5;
+        //}
     }
 }
