@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Text;
 
 
@@ -9,12 +10,22 @@ namespace Labb4_enLitenUpdate
     
     public class Map
     {
-        
+
         //Uppbyggnad av kart-array + on/off-funktion för spel
         private const int ROWS = 10;
         private const int COLUMNS = 20;
-        char[,] TheMap = new char[COLUMNS, ROWS];
+        Square[,] TheMap = new Square[COLUMNS, ROWS];
 
+
+        Counter c = new Counter();
+        RoomWithKey r = new RoomWithKey();
+        Keys k = new Keys();
+        Wall w = new Wall();
+        Door d = new Door();
+        Monster m = new Monster();
+        Exit e = new Exit();
+        Player p = new Player();
+        Floor f = new Floor();
         private bool gameOn;
         public bool GameOn { get { return gameOn; } set { gameOn = value; } }
 
@@ -23,40 +34,18 @@ namespace Labb4_enLitenUpdate
         private int startValueForPlayerX;
         private int startValueForPlayerY;
 
-        //Instansiering av objekt utanför kartklass för använding i densamma
-        Counter c = new Counter();
-        RoomWithKey r = new RoomWithKey();
-        Keys k = new Keys();
-
-        //Egenskaper för tecken + motsvarnade setters
-        private char wallSign = 'a'; public char WallSign { get { return wallSign; } set { wallSign = value; } }
-        private char floorSign = 'a'; public char FloorSign { get { return floorSign; } set { floorSign = value; } }
-        private char playerSign = 'a'; public char PlayerSign { get { return playerSign; } set { playerSign = value; } }
-        private char doorSign = 'a'; public char DoorSign { get { return doorSign; } set { doorSign = value; } }
-        private char exitSign = 'a'; public char ExitSign { get { return exitSign; } set { exitSign = value; } }
-        private char monsterSign = 'a'; public char MonsterSign { get { return monsterSign; } set { monsterSign = value; } }
-        private char roomWithKeySign = 'a'; public char RoomWithKeySign { get { return roomWithKeySign; } set { roomWithKeySign = value; } }
-
-        //metoder för att hämta tecken från teckenklasserna och initiera tecken-egenskaperna för kartklassen:
-        public void FetchWallSign() { Wall w = new Wall(); WallSign = w.SendSign(); }
-        public void FetchFloorSign() { Floor f = new Floor(); FloorSign = f.SendSign(); }
-        public void FetchPlayerSign() { Player p = new Player(); PlayerSign = p.PlayerSign; }
-        public void FetchDoorSign() { Door d = new Door(); DoorSign = d.SendSign(); }
-        public void FetchExitSign() { Exit e = new Exit(); ExitSign = e.SendSign(); }
-        public void FetchMonsterSign() { Monster m = new Monster(); MonsterSign = m.SendSign(); }
-        public void FetchRoomWithKeySign() { RoomWithKey r = new RoomWithKey(); RoomWithKeySign = r.SendSign(); }
-
-
-        //Skapar kartan
+        //Skapar kartan och lägger in tecken.
         public void RenderMap()  
+            
         {
+
             for (int row = 0; row < ROWS; row++)
             {
                 for (int column = 0; column < COLUMNS; column++)
                 {
                     if (row == 0 || row == 9 || column == 0 || column == 19)
                     {
-                        TheMap[column, row] = WallSign;
+                        TheMap[column, row] = w;
                     }
                     else if (
                              row == 4 && column == 9 ||
@@ -82,53 +71,40 @@ namespace Labb4_enLitenUpdate
                              row == 7 && column == 9 ||
                              row == 8 && column == 9
                              )
-
                     {
-                        TheMap[column, row] = WallSign;
+                        TheMap[column, row] = w;
                     }
-
-
-
-
                     else if (row == 5 && column == 9 || row == 4 && column == 15)
                     {
-                        TheMap[column, row] = DoorSign;
+                        TheMap[column, row] = d;
 
                     }
                     else if (row == 4 && column == 5 || row == 1 && column == 8)
                     {
-                        TheMap[column, row] = RoomWithKeySign;
+                        TheMap[column, row] = r;
                     }
 
                     else if (row == 7 && column == 17 || row == 4 && column == 8 || row == 8 && column == 3)
                     {
-                        TheMap[column, row] = MonsterSign;
+                        TheMap[column, row] = m;
                     }
                     else if (row == 2 && column == 18)
                     {
-                        TheMap[column, row] = ExitSign;
+                        TheMap[column, row] = e;
                     }
                     else
                     {
-                        TheMap[column, row] = FloorSign;
+                        TheMap[column, row] = f;
                     }
-
                 }
             }
-
-
-
-
         }
-
 
         //Ritar ut kartan
         public void UpdateMap()   
         {
-            
             while (GameOn == true)
             {
-
                 Console.CursorLeft = 0;
                 Console.CursorTop = 0;
 
@@ -140,20 +116,15 @@ namespace Labb4_enLitenUpdate
                     {
                         if (ii == startValueForPlayerX && jj == startValueForPlayerY)
                         {
-                            Console.Write(PlayerSign);
+                           p.Draw();
                         }
-                        else if (jj == startValueForPlayerY && ii == startValueForPlayerX || jj == startValueForPlayerY - 1 && ii == startValueForPlayerX || jj == startValueForPlayerY + 1 && ii == startValueForPlayerX ||
-                            jj == startValueForPlayerY && ii == startValueForPlayerX - 1 || jj == startValueForPlayerY && ii == startValueForPlayerX + 1 || jj == startValueForPlayerY - 1 && ii == startValueForPlayerX - 1 ||
-                            jj == startValueForPlayerY - 1 && ii == startValueForPlayerX + 1 || jj == startValueForPlayerY + 1 && ii == startValueForPlayerX - 1 || jj == startValueForPlayerY + 1 && ii == startValueForPlayerX + 1 ||
-                            ii == rows - 1 || ii == 0 || jj == cols - 1 || jj == 0)
-                        {
-                            Console.Write(TheMap[ii, jj]);
-                        }
-
                         else
                         {
-                            Console.Write(" ");
+                       
+                            TheMap[ii,jj].Draw();
                         }
+
+
                     }
                     Console.WriteLine();
                 }
@@ -163,6 +134,7 @@ namespace Labb4_enLitenUpdate
                 {
                     if(c.Points == 0)
                     {
+                        //Slut på poäng - Game over.
                         GameOn = false;
                         GamoOver();
                         c.setCursor(3, 1);
@@ -173,21 +145,23 @@ namespace Labb4_enLitenUpdate
                         return false;
                     }
 
-                    if (TheMap[playerx, playery] == r.RoomSign)
+                    if (TheMap[playerx, playery] == r)
                     {
+                        //Golv
                         c.AddKeys();
-                        TheMap[playerx, playery] = FloorSign;
+                        TheMap[playerx, playery] = f;
                         return true;
-
                     }
-                    else if (TheMap[playerx, playery] == WallSign)
+                    else if (TheMap[playerx, playery] == w)
                     {
+                        //Vägg
                         c.AnnounceMoves();
                         return false;
                     }
 
-                    else if (TheMap[playerx, playery] == ExitSign)
+                    else if (TheMap[playerx, playery] == e)
                     {
+                        //Hittat utgången
                         GameOn = false;
                         GamoOver();
                         c.setCursor(4, 1);
@@ -197,29 +171,29 @@ namespace Labb4_enLitenUpdate
                         Console.Write($"G A M E  O V E R");
                         return true;
                     }
-                    else if (TheMap[playerx, playery] == DoorSign)
+                    else if (TheMap[playerx, playery] == d)
                     {
+                        //Låst dörr - Har nyckel
                         if (c.HasKey())
                         {
                             c.RemoveKeys();
-                            TheMap[playerx, playery] = FloorSign;
+                            TheMap[playerx, playery] = f;
                             return true;
                         }
 
                         else
                         {
-                            
+                        //Låst dörr - Har inte nyckel
                             c.AnnounceMoves();
                             c.setCursor(22, 5);
                             Console.WriteLine($"Blimey! You don't have a key... Find one.");
                             return false;
                         }
-
                     }
-
-                    else if (TheMap[playerx, playery] == MonsterSign)
+                    //Monster
+                    else if (TheMap[playerx, playery] == m)
                     {
-                        TheMap[playerx, playery] = FloorSign;
+                        TheMap[playerx, playery] = f;
                         c.MonsterTakesPoints();
                         return true;
                     }
@@ -227,11 +201,9 @@ namespace Labb4_enLitenUpdate
                     {
                         return true;
                     }
-
                 }
 
-
-                //Console.Write($"{buffer}");
+                //Spelarrörelse
 
                 ConsoleKeyInfo pressedKey = Console.ReadKey();
                 Console.WriteLine(pressedKey.Key.ToString());
@@ -278,62 +250,49 @@ namespace Labb4_enLitenUpdate
                     Thread.Sleep(3000);
                     Environment.Exit(0);
                 }
-
-
             }
-
         }
-
+        //Game Over
         public void GamoOver()
         {
             Wall wall = new Wall();
             Map map = new Map();
 
-            FetchWallSign();
+            
 
             for (int row = 0; row < ROWS; row++)
             {
                 for (int column = 0; column < COLUMNS; column++)
                 {
-                    Console.Write($"{WallSign}");
+                    Console.Write($"{w.Tile}");
                 }
                 Console.WriteLine();
-
             }
+
             map.GameOn = false;
             Thread.Sleep(3000);
             if(c.Points == 0) 
             Console.WriteLine($"\n\n(Press any key to end.)");
-            
-
         }
         
         public Map()
         {
-            //initiering av tecknen för kartan vid instansiering av objekt
-            FetchWallSign();
-            FetchFloorSign();
-            FetchPlayerSign();
-            FetchDoorSign();
-            FetchExitSign();
-            FetchMonsterSign();
-            FetchRoomWithKeySign();
+            Counter c = new Counter();
+            RoomWithKey r = new RoomWithKey();
+            Keys k = new Keys();
+            Wall w = new Wall();
+            Door d = new Door();
+            Monster m = new Monster();
+            Exit e = new Exit();
+            Player p = new Player();
+            Floor f = new Floor();
 
+          
             //Initering av egenskaper för kartan
             GameOn = true;
             startValueForPlayerX = 2;
             startValueForPlayerY = 2;
-
         }
-
-
     }
-
-
-
-
-
-
-
 }
 
