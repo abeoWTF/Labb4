@@ -277,17 +277,7 @@ namespace Labb4_enLitenUpdate
         
         public Map()
         {
-            Counter c = new Counter();
-            RoomWithKey r = new RoomWithKey();
-            Keys k = new Keys();
-            Wall w = new Wall();
-            Door d = new Door();
-            Monster m = new Monster();
-            Exit e = new Exit();
-            Player p = new Player();
-            Floor f = new Floor();
-
-          
+            
             //Initering av egenskaper för kartan
             GameOn = true;
             startValueForPlayerX = 2;

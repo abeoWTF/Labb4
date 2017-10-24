@@ -9,7 +9,7 @@ namespace Labb4_enLitenUpdate
     {
         public Player()
         {
-            Tile = (char)Signs.s1;
+            Tile = (char)Signs.s8;
         }
         public void Print()
         {
