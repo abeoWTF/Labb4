@@ -14,11 +14,13 @@ namespace Labb4_enLitenUpdate
             set { doorOpen = value; }
         }
 
-        private char doorSign;
-        public char DoorSign
+        public Door()
         {
-            get { return doorSign; }
-            set { doorSign = value; }
+            Tile = (char)Signs.s2;
+        }
+        public void Print()
+        {
+            Console.Write(Tile);
         }
 
         //kolla om nyckel finns
@@ -30,17 +32,17 @@ namespace Labb4_enLitenUpdate
             c.RemoveKeys();
         }
 
-        public char SendSign()  //Skicka tecken till Map-klassen
-        {
-            char send = DoorSign;
-            return send;
-        }
+        //public char SendSign()  //Skicka tecken till Map-klassen
+        //{
+        //    char send = DoorSign;
+        //    return send;
+        //}
 
-        public Door()
-        {
-            DoorOpen = false;
-            DoorSign = (char)Signs.s2;
-        }
+        //public Door()
+        //{
+        //    DoorOpen = false;
+        //    DoorSign = (char)Signs.s2;
+        //}
 
     }
 }

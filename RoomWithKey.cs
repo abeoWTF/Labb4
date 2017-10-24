@@ -6,22 +6,30 @@ namespace Labb4_enLitenUpdate
 {
     public class RoomWithKey : Square, IMakeSignSendable
     {
-        private char roomSign;
-        public char RoomSign
+        public RoomWithKey()
         {
-            get { return roomSign; }
-            set { roomSign = value; }
+            Tile = (char)Signs.s6;
         }
+        public void Print()
+        {
+            Console.Write(Tile);
+        }
+        //private char roomSign;
+        //public char RoomSign
+        //{
+        //    get { return roomSign; }
+        //    set { roomSign = value; }
+        //}
 
-        public char SendSign()  //Skicka tecken till Map-klassen
-        {
-            char send = RoomSign;
-            return send;
-        }
+        //public char SendSign()  //Skicka tecken till Map-klassen
+        //{
+        //    char send = RoomSign;
+        //    return send;
+        //}
 
-        public RoomWithKey()  
-        {
-            RoomSign = (char)Signs.s6;
-        }
+        //public RoomWithKey()  
+        //{
+        //    RoomSign = (char)Signs.s6;
+        //}
     }
 }

@@ -7,24 +7,32 @@ namespace Labb4_enLitenUpdate
 
     public class Exit : Square, IMakeSignSendable
     {
-        private char exitSign;
-        public char ExitSign
+        public Exit()
         {
-            get { return exitSign; }
-            set { exitSign = value; }
+            Tile = (char)Signs.s7;
         }
-
-        public char SendSign()  //Skicka tecken till Map-klassen
+        public void Print()
         {
-            char send = ExitSign;
-            return send;
+            Console.Write(Tile);
         }
+        //private char exitSign;
+        //public char ExitSign
+        //{
+        //    get { return exitSign; }
+        //    set { exitSign = value; }
+        //}
 
-        public Exit()  
-        {
-            ExitSign = (char)Signs.s7;
+        //public char SendSign()  //Skicka tecken till Map-klassen
+        //{
+        //    char send = ExitSign;
+        //    return send;
+        //}
 
-        }
+        //public Exit()  
+        //{
+        //    ExitSign = (char)Signs.s7;
+
+        //}
 
     }
 }
