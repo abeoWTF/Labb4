@@ -87,7 +87,6 @@ namespace Labb4_enLitenUpdate
             AnnounceExit();
             setCursor(1, 13);
             Console.WriteLine($"Moves: {MovesAmount}");
-
         }
 
         public void AnnounceExit()
