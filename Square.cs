@@ -15,6 +15,8 @@ namespace Labb4_enLitenUpdate
             get { return tile; }
             set { tile = value; }
         }
+
+        //Ritar karta.
         public void Draw()
         {
           Console.Write(Tile);

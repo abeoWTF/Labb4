@@ -15,12 +15,6 @@ namespace Labb4_enLitenUpdate
         {
             Console.Write(Tile);
         }
-        //private char playerSign;
-        //public char PlayerSign { get { return playerSign; } set { playerSign = value; } }
-
-        //public Player() 
-        //{
-        //    PlayerSign = '@';  //Spelar-tecken till map-klassen
-        //}
+        
     }
 }
