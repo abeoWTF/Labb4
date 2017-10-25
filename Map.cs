@@ -38,7 +38,6 @@ namespace Labb4_enLitenUpdate
         public void RenderMap()  
             
         {
-
             for (int row = 0; row < ROWS; row++)
             {
                 for (int column = 0; column < COLUMNS; column++)
@@ -123,8 +122,6 @@ namespace Labb4_enLitenUpdate
                        
                             TheMap[ii,jj].Draw();
                         }
-
-
                     }
                     Console.WriteLine();
                 }

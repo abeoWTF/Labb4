@@ -32,17 +32,5 @@ namespace Labb4_enLitenUpdate
             c.RemoveKeys();
         }
 
-        //public char SendSign()  //Skicka tecken till Map-klassen
-        //{
-        //    char send = DoorSign;
-        //    return send;
-        //}
-
-        //public Door()
-        //{
-        //    DoorOpen = false;
-        //    DoorSign = (char)Signs.s2;
-        //}
-
     }
 }
